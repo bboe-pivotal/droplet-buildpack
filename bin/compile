@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+# Configure directories
+build_dir=$1
+cache_dir=$2
+
+echo Build dir:
+echo $build_dir
+echo Cache dir:
+echo $cache_dir
+printenv
+
+
+echo Crash.........

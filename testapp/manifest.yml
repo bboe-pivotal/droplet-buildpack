@@ -1,0 +1,7 @@
+applications:
+- name: uitestapp
+  host: uitestapp
+  memory: 64MB
+  instances: 1
+  path: .
+  buildpack: java_buildpack
