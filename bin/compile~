@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
-set -e            # fail fast
-set -o pipefail   # do not ignore exit codes when piping output
-
 # Configure directories
 build_dir=$1
 cache_dir=$2
