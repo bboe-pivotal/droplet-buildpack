@@ -4,5 +4,5 @@ applications:
   memory: 64MB
   instances: 1
   path: .
-  buildpack: https://github.com/cloudfoundry/staticfile-buildpack
-#  buildpack: https://github.com/bboe-pivotal/droplet-builder
+#  buildpack: https://github.com/cloudfoundry/staticfile-buildpack
+  buildpack: https://github.com/bboe-pivotal/droplet-builder
