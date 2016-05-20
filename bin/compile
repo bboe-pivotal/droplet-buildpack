@@ -22,9 +22,9 @@ echo printenv
 printenv
 echo pwd
 pwd
-echo Contents of /tmp
-cd /tmp
+echo Directory contents
 find .
+mkdir abcdefg
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
