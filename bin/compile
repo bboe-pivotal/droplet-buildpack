@@ -7,6 +7,7 @@ set -o pipefail   # do not ignore exit codes when piping output
 # Configure directories
 build_dir=$1
 cache_dir=$2
+compile_buildpack_dir=$(cd $(dirname $0); cd ..; pwd)
 
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -15,8 +16,12 @@ echo Build dir:
 echo $build_dir
 echo Cache dir:
 echo $cache_dir
+echo Compile buildpack dir:
+echo $compile_buildpack_dir
 echo printenv
 printenv
+echo pwd
+pwd
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

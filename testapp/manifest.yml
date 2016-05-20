@@ -6,3 +6,5 @@ applications:
   path: .
 #  buildpack: https://github.com/cloudfoundry/staticfile-buildpack
   buildpack: https://github.com/bboe-pivotal/droplet-builder
+  env:
+    deploy-buildpack: https://github.com/cloudfoundry/staticfile-buildpack
