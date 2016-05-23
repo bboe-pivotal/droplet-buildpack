@@ -51,7 +51,7 @@ pwd
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-cd $1
+cd $compile_buildpack_dir
 pwd
 find . -type d | sed -e 's/^/mkdir -p "/' | sed -e 's/$/"/' > mkdirs.sh
 echo All done!!!!!
