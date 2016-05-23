@@ -31,4 +31,10 @@ cd buildpack
 git clone --recursive $deploybuildpack
 cd $(basename $deploybuildpack)
 pwd
+echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+echo About to run $(basename $deploybuildpack)
+./bin/compile $1 $2
+
 echo Crash.........
