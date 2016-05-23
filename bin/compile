@@ -36,5 +36,7 @@ echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo About to run $(basename $deploybuildpack)
 ./bin/compile $1 $2
-
-echo Crash.........
+tar cvf $1/app.tar $1/*
+./bin/release > $1.release.yml
+cd $1
+find . -type d | sed -e 's/^/mkdir -p "/' | sed -e 's/$/"/' > mkdirs.sh
