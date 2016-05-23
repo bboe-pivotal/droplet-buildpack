@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# bin/detect <cf-app-name> <org-manifest.yml>
+
+cf_app_name=$1
+org_manifest=$2
+
+cf ssh $1 -c "cat app/app.tar | xxd" | xxd -r > app.tar
+cf ssh $1 -c "cat app/mkdirs.sh | xxd" | xxd -r > mkdirs.sh
+cf ssh $1 -c "cat app/release.yml | xxd" | xxd -r > release.yml
+
+
