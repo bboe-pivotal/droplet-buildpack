@@ -26,6 +26,9 @@ echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo Cloning buildpack from $deploy-buildpack
+mkdir buildpack
+cd buildpack
 git clone --recursive $deploybuildpack
-find .
+cd $(basename $deploybuildpack)
+pwd
 echo Crash.........
