@@ -3,3 +3,4 @@ build/
 .gradle/
 .#.*
 testapps/static-hello-world-droplet
+testapps/spring-music-droplet
