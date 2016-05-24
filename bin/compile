@@ -55,8 +55,8 @@ cd $build_dir
 pwd
 find . -type d | sed -e 's/^/mkdir -p "/' | sed -e 's/$/"/' > mkdirs.sh
 echo All done!!!!!
-echo Additional debugging!!!!!
-find .
-echo Look at webapp root directory
-cd .java-buildpack/tomcat/webapps/ROOT
-ls -l
+#echo Additional debugging!!!!!
+#find .
+#echo Look at webapp root directory
+#cd .java-buildpack/tomcat/webapps/ROOT
+#ls -l
