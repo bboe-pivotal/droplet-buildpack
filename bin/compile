@@ -13,14 +13,10 @@ org_execution_dir=`pwd`
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-echo Build dir:
-echo $build_dir
-echo Cache dir:
-echo $cache_dir
-echo Compile buildpack dir:
-echo $compile_buildpack_dir
-echo Original script execution dir:
-echo $org_execution_dir
+echo Build dir:                     $build_dir
+echo Cache dir:                     $cache_dir
+echo Compile buildpack dir:         $compile_buildpack_dir
+echo Original script execution dir: $org_execution_dir
 #echo printenv
 #printenv
 #echo pwd
