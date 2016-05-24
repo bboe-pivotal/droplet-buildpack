@@ -56,3 +56,4 @@ cd $1
 pwd
 find . -type d | sed -e 's/^/mkdir -p "/' | sed -e 's/$/"/' > mkdirs.sh
 echo All done!!!!!
+echo AIAAAAIAIAIAIAIAAAAAA > $1/didcompile.txt
