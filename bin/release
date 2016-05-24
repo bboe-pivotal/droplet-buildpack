@@ -3,7 +3,6 @@
 
 # Configure directories
 build_dir=$1
-cache_dir=$2
 compile_buildpack_dir=$(cd $(dirname $0); cd ..; pwd)
 org_execution_dir=`pwd`
 
@@ -11,11 +10,20 @@ echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX >&2
 echo                  RELEASE >&2
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX >&2
 echo Build dir:                     $build_dir >&2
-echo Cache dir:                     $cache_dir >&2
 echo Compile buildpack dir:         $compile_buildpack_dir >&2
 echo Original script execution dir: $org_execution_dir >&2
 
+echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX >&2
+echo                  FIND IN WORKING DIR >&2
+echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX >&2
 find . >&2
+
+cd $build_dir
+echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX >&2
+echo                  FIND IN BUILD DIR >&2
+echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX >&2
+find . >&2
+
 
 echo -e "---\ndefault_process_types:\n  web: sh boot.sh"
 #./buildpack/buildpack/bin/release
