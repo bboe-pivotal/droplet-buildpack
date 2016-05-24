@@ -29,7 +29,8 @@ echo Cloning buildpack from $deploy-buildpack
 mkdir buildpack
 cd buildpack
 git clone --recursive $deploybuildpack
-cd $(basename $deploybuildpack)
+mv $(basename $deploybuildpack) buildpack
+cd buildpack
 pwd
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo aaaa XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
