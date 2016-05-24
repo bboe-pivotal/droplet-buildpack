@@ -2,4 +2,5 @@
 # bin/release <build-dir>
 
 #echo -e "---\ndefault_process_types:\n  web: sh boot.sh"
-./buildpack/buildpack/bin/release
+#./buildpack/buildpack/bin/release
+cat $1/release.yml
