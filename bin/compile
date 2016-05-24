@@ -41,7 +41,7 @@ echo 3 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 cd $1
 pwd
-tar cf app.tar .
+tar cvf app.tar .
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo 4 - XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -51,8 +51,12 @@ pwd
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo 5 - XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-cd $1
+cd $build_dir
 pwd
 find . -type d | sed -e 's/^/mkdir -p "/' | sed -e 's/$/"/' > mkdirs.sh
 echo All done!!!!!
-echo AIAAAAIAIAIAIAIAAAAAA > $1/didcompile.txt
+echo Additional debugging!!!!!
+find .
+echo Look at webapp root directory
+cd .java-buildpack/tomcat/webapps/ROOT
+ls -l
