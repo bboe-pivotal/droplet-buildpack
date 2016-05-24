@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # bin/release <build-dir>
 
-echo AIAAAAIAIAIAIAIAAAAAA > $1/didrelease.txt
+echo AAAAAAAAAAAAAAAAA - Bjorn is debugging! - AAAAAAAAAAAAAAAA >&2
 
 echo -e "---\ndefault_process_types:\n  web: sh boot.sh"
 #./buildpack/buildpack/bin/release
