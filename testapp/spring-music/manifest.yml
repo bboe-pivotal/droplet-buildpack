@@ -3,6 +3,8 @@ applications:
 - name: spring-music
   memory: 512M
   instances: 1
-  host: smusic
+  host: spring-music
   path: build/libs/spring-music.war
-
+  buildpack: https://github.com/bboe-pivotal/droplet-builder
+  env:
+    deploybuildpack: https://github.com/cloudfoundry/java-buildpack
