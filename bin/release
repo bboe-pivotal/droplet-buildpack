@@ -24,7 +24,8 @@ echo                  FIND IN BUILD DIR >&2
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX >&2
 find . >&2
 
+cat ./release.yml
 
-echo -e "---\ndefault_process_types:\n  web: sh boot.sh"
+#echo -e "---\ndefault_process_types:\n  web: sh boot.sh"
 #./buildpack/buildpack/bin/release
 #cat $1/release.yml
