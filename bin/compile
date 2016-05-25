@@ -16,7 +16,7 @@ echo Cache dir:                     $cache_dir
 echo Compile buildpack dir:         $compile_buildpack_dir
 echo Original script execution dir: $org_execution_dir
 
-echo Cloning buildpack from $deploy-buildpack
+echo Cloning buildpack from $deploybuildpack
 mkdir buildpack
 cd buildpack
 git clone --recursive $deploybuildpack
