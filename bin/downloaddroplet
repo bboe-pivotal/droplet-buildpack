@@ -6,16 +6,16 @@ org_manifest=$2
 
 rm -rf *
 
-cf ssh $1 -c "cat app/app.tar | xxd" | xxd -r > app.tar
-cf ssh $1 -c "cat app/mkdirs.sh | xxd" | xxd -r > mkdirs.sh
-cf ssh $1 -c "cat app/release.yml | xxd" | xxd -r > release.yml
+cf ssh $1 -c "cat app/app.tar | base64" | base64 -D > app.tar
+cf ssh $1 -c "cat app/mkdirs.sh | base64" | base64 -D > mkdirs.sh
+cf ssh $1 -c "cat app/release.yml | base64" | base64 -D > release.yml
 
 echo Extracting application
 mkdir app
 cd app
 tar xf ../app.tar *
 cd ..
-rm app.tar
+#rm app.tar
 
 echo Moving mkdirs.sh to application
 mv mkdirs.sh app
@@ -43,4 +43,4 @@ cat release.yml | tail -1 | cut -f2 -d":" | xargs >> ./app/startbinary.sh
 
 chmod 755 app/*.sh
 
-rm release.yml
+#rm release.yml
