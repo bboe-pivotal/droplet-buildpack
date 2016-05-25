@@ -7,18 +7,7 @@ org_manifest=$2
 rm -rf *
 
 cf ssh $1 -c "cat app/app.tar.gz | base64" | base64 -D > app.tar.gz
-cf ssh $1 -c "cat app/mkdirs.sh | base64" | base64 -D > mkdirs.sh
 cf ssh $1 -c "cat app/release.yml | base64" | base64 -D > release.yml
-
-echo Extracting application
-mkdir app
-cd app
-tar xzf ../app.tar *
-cd ..
-#rm app.tar
-
-echo Moving mkdirs.sh to application
-mv mkdirs.sh app
 
 echo Constructing manifest.yml
 cp $2 .
@@ -35,12 +24,15 @@ if [ $lines_not_matching_env -eq 1  ]
   cat manifest.yml | grep -v "  env:" > tmp.yml && mv tmp.yml manifest.yml
 fi
 
-procfilevariable="`cat release.yml | tail -1 | cut -f1 -d":" | xargs`: sh startbinary.sh"
-echo $procfilevariable > ./app/Procfile
+echo Constructing app folder
+mkdir app
+mv app.tar.gz app
 
-echo "./mkdirs.sh" > ./app/startbinary.sh
-cat release.yml | tail -1 | cut -f2 -d":" | xargs >> ./app/startbinary.sh
 
-chmod 755 app/*.sh
+cat release.yml | grep -A1000 "default_process_types:" | tail -n +2 > app/Procfile
+rm release.yml
 
-#rm release.yml
+cd app
+cat Procfile | head -1 | xargs | sed 's/.*:/& tar xzf app.tar.gz \&\& rm app.tar.gz \&\&/' > tmpprocfile
+cat Procfile | tail -n +2 >> tmpprocfile
+mv tmpprocfile Procfile
