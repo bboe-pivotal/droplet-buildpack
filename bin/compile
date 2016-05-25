@@ -10,54 +10,30 @@ cache_dir=$2
 compile_buildpack_dir=$(cd $(dirname $0); cd ..; pwd)
 org_execution_dir=`pwd`
 
-echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+echo Droplet builder compile start
 echo Build dir:                     $build_dir
 echo Cache dir:                     $cache_dir
 echo Compile buildpack dir:         $compile_buildpack_dir
 echo Original script execution dir: $org_execution_dir
-#echo printenv
-#printenv
-#echo pwd
-#pwd
-echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-echo 1 - XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
 echo Cloning buildpack from $deploy-buildpack
 mkdir buildpack
 cd buildpack
 git clone --recursive $deploybuildpack
 mv $(basename $deploybuildpack) buildpack
 cd buildpack
-pwd
-echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-echo 2 - XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-echo About to run $(basename $deploybuildpack)
+
+echo About to compile $(basename $deploybuildpack)
 ./bin/compile $1 $2
-echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-echo 3 -  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+echo Make application package
 cd $1
-pwd
 tar czf $cache_dir/app.tar.gz .
 mv $cache_dir/app.tar.gz .
-echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-echo 4 - XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+echo Capture release information
 cd $org_execution_dir
 pwd
 ./buildpack/buildpack/bin/release $1 > $1/release.yml
-echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-echo 5 - XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-cd $build_dir
-pwd
-find . -type d | sed -e 's/^/mkdir -p "/' | sed -e 's/$/"/' > mkdirs.sh
-echo All done!!!!!
-#echo Additional debugging!!!!!
-#find .
-#echo Look at webapp root directory
-#cd .java-buildpack/tomcat/webapps/ROOT
-#ls -l
+
+echo Droplet builder compile end
