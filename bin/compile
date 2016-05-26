@@ -33,7 +33,6 @@ mv $cache_dir/app.tar.gz .
 
 echo Capture release information
 cd $org_execution_dir
-pwd
 ./buildpack/buildpack/bin/release $1 > $1/release.yml
 
 echo Droplet builder compile end
