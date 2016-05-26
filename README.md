@@ -149,4 +149,21 @@ This example will leverage an example application found at https://github.com/cl
 
     ```
     [/myworkarea/test-app-droplet]$ cf push
-    
+    ...
+    App test-app was started using this command `tar xzf app.tar.gz && rm app.tar.gz && test-app`
+
+    Showing health and status for app test-app in org pcfdev-org / space dev as admin...
+    OK
+
+    requested state: started
+    instances: 1/1
+    usage: 256M x 1 instances
+    urls: test-app.local.pcfdev.io
+    last uploaded: Thu May 26 13:51:00 UTC 2016
+    stack: unknown
+    buildpack: binary_buildpack
+
+         state     since                    cpu    memory      disk        details
+    #0   running   2016-05-26 09:51:07 AM   0.0%   0 of 256M   0 of 512M
+    ```
+    Note that the application is now up and running using the binary buildpack and is now ready to be tested.
