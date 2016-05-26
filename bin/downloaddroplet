@@ -40,7 +40,7 @@ mv tmpprocfile Procfile
 echo Extract and keep .profile.d directory, if it exists
 mkdir tmp
 cd tmp
-tar xvzf ../app.tar.gz
+tar xzf ../app.tar.gz
 mv .profile.d ..
 cd ..
 rm -rf tmp
