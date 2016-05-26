@@ -36,3 +36,11 @@ cd app
 cat Procfile | head -1 | xargs | sed 's/.*:/& tar xzf app.tar.gz \&\& rm app.tar.gz \&\&/' > tmpprocfile
 cat Procfile | tail -n +2 >> tmpprocfile
 mv tmpprocfile Procfile
+
+echo Extract and keep .profile.d directory, if it exists
+mkdir tmp
+cd tmp
+tar xvzf ../app.tar.gz
+mv .profile.d ..
+cd ..
+rm -rf tmp
