@@ -17,6 +17,17 @@ cat manifest.yml | grep -v "  path:" > tmp.yml && mv tmp.yml manifest.yml
 echo "  path: app" >> manifest.yml
 echo "  buildpack: binary_buildpack" >> manifest.yml
 
+
+
+echo Extracting env variable from release.yml
+cat release.yml | grep -A1000 "^config_vars:" | tail -n +2 | sed -e '/^[a-zA-Z]/q' | sed '$ d' > tmpenv.yml
+
+cat manifest.yml | sed -e '/^  env:/q' > newmanifest.yml
+cat tmpenv.yml | sed 's/^/  /' >> newmanifest.yml
+cat manifest.yml | grep -A1000 '^  env:' | tail -n +2 >> newmanifest.yml
+mv newmanifest.yml manifest.yml
+rm tmpenv.yml
+
 lines_not_matching_env=`cat manifest.yml | grep -A1 "env:" | tail -1 | grep -v "^    .*" | wc -l`
 if [ $lines_not_matching_env -eq 1  ]  
   then  
@@ -29,13 +40,13 @@ mkdir app
 mv app.tar.gz app
 
 
-cat release.yml | grep -A1000 "default_process_types:" | tail -n +2 > app/Procfile
-rm release.yml
-
 cd app
+cat ../release.yml | grep -A1000 "^  web:" > Procfile
 cat Procfile | head -1 | xargs | sed 's/.*:/& tar xzf app.tar.gz \&\& rm app.tar.gz \&\&/' > tmpprocfile
-cat Procfile | tail -n +2 >> tmpprocfile
+cat Procfile | tail -n +2 | sed -e '/^  [a-zA-Z]*:/ { N; d; }' >> tmpprocfile
 mv tmpprocfile Procfile
+rm ../release.yml
+
 
 echo Extract and keep .profile.d directory, if it exists
 mkdir tmp
