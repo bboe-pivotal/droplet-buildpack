@@ -2,4 +2,4 @@
 # bin/detect <build-dir>
 
 echo "Bjorn's Buildpack - Detect"
-exit 0
+exit 1
