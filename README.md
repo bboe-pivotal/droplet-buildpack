@@ -142,15 +142,14 @@ This example will leverage an example application found at https://github.com/cl
     [/myworkarea/test-app-droplet]$ ../droplet-buildpack/bin/downloaddroplet test-app ../test-app/manifest.yml
     Constructing manifest.yml
     Environment yaml section not set, remove declaration
-    Constructing app folder
     ```
-    The directory now has a new manifest.yml that has all the old settings, but have been modified to use the binary buildpack instead. The app folder contains what will actually get pushed into Cloud Foundry, which includes a tar-ball containing the Droplet and a Procfile needed by the binary buildpack with information on how to start the application.
+    The directory now has a new manifest.yml that has all the old settings, but have been modified to use the droplet buildpack instead. The application itself is wrapped in droplet.tar.gz, which gets uploaded when pushing the droplet back into Cloud Foundry.
 11. Push the Droplet-based version of the application to Cloud Foundry
 
     ```
     [/myworkarea/test-app-droplet]$ cf push
     ...
-    App test-app was started using this command `tar xzf app.tar.gz && rm app.tar.gz && test-app`
+    App test-app was started using this command `test-app`
 
     Showing health and status for app test-app in org pcfdev-org / space dev as admin...
     OK
