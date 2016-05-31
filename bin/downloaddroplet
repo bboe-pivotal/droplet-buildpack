@@ -42,7 +42,7 @@ mv droplet.tar.gz app
 
 cd app
 cat ../release.yml | grep -A1000 "^  web:" > Procfile
-cat Procfile | head -1 | xargs | sed 's/.*:/& tar xzf droplet.tar.gz \&\& rm drop.tar.gz \&\&/' > tmpprocfile
+cat Procfile | head -1 | xargs | sed 's/.*:/& tar xzf droplet.tar.gz \&\& rm droplet.tar.gz \&\&/' > tmpprocfile
 cat Procfile | tail -n +2 | sed -e '/^  [a-zA-Z]*:/ { N; d; }' >> tmpprocfile
 mv tmpprocfile Procfile
 rm ../release.yml
