@@ -1,4 +1,4 @@
-# Cloud Foundry Droplet Building Buildpack
+# Cloud Foundry Droplet Buildpack
 ## Purpose of buildpack
 The purpose of this buildpack is to enable users to download from Cloud Foundry the complete application, including application binaries, and deploy exactly the same application to a different environment. This is particularly useful in a CI/CD pipeline where the operator wants to guarantee that exactly the same build of an application gets deployed to all environments. In that way a change or update to the buildpack will not create a difference between what gets deployed in different environments.
 
@@ -11,7 +11,7 @@ To run the test applications, do the following steps:
   ```
   $ cd testapps/
   ```
-* Build and push application using regular buildpack, wrapped by the droplet-builder buildpack.
+* Build and push application using regular buildpack, wrapped by the droplet buildpack.
   
   ```
   $ ./push-spring-music.sh
@@ -83,20 +83,20 @@ This example will leverage an example application found at https://github.com/cl
    ```
 5. Modify the application to leverage the Droplet Buildpack.
    In order to extract the Droplet we actually need to run through the push process within Cloud Foundry with the buildpack appropriate for the application being deployed, and the extract the application binaries and additional information on how to run the application.
-   This is done by using the Droplet Builder buildpack to gather this extra information.
+   This is done by using the Droplet buildpack to gather this extra information.
    The test application does not come with a manifest.yml, so we need to create one, which will look as follows:
    
    ```
    ---
    applications:
    - name: test-app
-      buildpack: https://github.com/bboe-pivotal/droplet-builder
+      buildpack: https://github.com/bboe-pivotal/droplet-buildpack
       env:
         deploybuildpack: https://github.com/cloudfoundry/go-buildpack
    ```
    The above contains the bare minimum manifest.yml for this example.
    Note the following about this manifest.yml:
-   * The buildpack for this application is set to https://github.com/bboe-pivotal/droplet-builder.
+   * The buildpack for this application is set to https://github.com/bboe-pivotal/droplet-buildpack.
    * An extra environment variable refers to the buildpack that the application actually relies on to run.
      This environment variable must refer to the Git-source of the buildpack. It can not refer to a built in buildpack in Cloud Foundry.
 6. Push the modified application into Cloud Foundry
@@ -110,19 +110,19 @@ This example will leverage an example application found at https://github.com/cl
    urls: test-app.local.pcfdev.io
    last uploaded: Wed May 25 20:29:28 UTC 2016
    stack: unknown
-   buildpack: https://github.com/bboe-pivotal/droplet-builder
+   buildpack: https://github.com/bboe-pivotal/droplet-buildpack
 
         state     since                    cpu    memory      disk        details
    #0   running   2016-05-25 04:30:00 PM   0.0%   0 of 256M   0 of 512M
    ```
    The application have been deployed, runs as normal and can be tested at the URL specified by Cloud Foundry. In addition to that has the buildpack left behind some extra files in the deployment that can be downloading through SSH directly from one of the application instances.
 7. Download droplet and generate deployable executable. This operation relies on a script called [downloaddroplet](bin/downloaddroplet). 
-8. Clone the droplet-builder repsitory in the work area.
+8. Clone the droplet-buildpack repsitory in the work area.
 
    ```
    [/myworkarea/test-app]$ cd ..
-   [/myworkarea]$ git clone https://github.com/bboe-pivotal/droplet-builder/
-   Cloning into 'droplet-builder'...
+   [/myworkarea]$ git clone https://github.com/bboe-pivotal/droplet-buildpack/
+   Cloning into 'droplet-buildpack'...
    remote: Counting objects: 333, done.
    remote: Total 333 (delta 1), reused 1 (delta 1), pack-reused 331
    Receiving objects: 100% (333/333), 133.95 KiB | 0 bytes/s, done.
@@ -139,7 +139,7 @@ This example will leverage an example application found at https://github.com/cl
 10. Generate droplet using script from buildpack. This script requires reference to the application that was just deployed to Cloud Foundry and the original manifest.yml used earlier. The original manifest.yml is needed to make sure the droplet can be deployed with all original settings for things like services, environment variables, memory, ec.
     
     ```
-    [/myworkarea/test-app-droplet]$ ../droplet-builder/bin/downloaddroplet test-app ../test-app/manifest.yml
+    [/myworkarea/test-app-droplet]$ ../droplet-buildpack/bin/downloaddroplet test-app ../test-app/manifest.yml
     Constructing manifest.yml
     Environment yaml section not set, remove declaration
     Constructing app folder
@@ -161,7 +161,7 @@ This example will leverage an example application found at https://github.com/cl
     urls: test-app.local.pcfdev.io
     last uploaded: Thu May 26 13:51:00 UTC 2016
     stack: unknown
-    buildpack: binary_buildpack
+    buildpack: https://github.com/bboe-pivotal/droplet-buildpack
 
          state     since                    cpu    memory      disk        details
     #0   running   2016-05-26 09:51:07 AM   0.0%   0 of 256M   0 of 512M
