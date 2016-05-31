@@ -3,8 +3,8 @@
 
 cf_app_name=$1
 org_manifest=$2
-buildpack_location="droplet_buildpack"
-#buildpack_location="https://github.com/bboe-pivotal/droplet-builder/"
+#buildpack_location="droplet_buildpack"
+buildpack_location="https://github.com/bboe-pivotal/droplet-buildpack"
 
 rm -rf *
 

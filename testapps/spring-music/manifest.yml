@@ -5,6 +5,6 @@ applications:
   instances: 1
   random-route: true
   path: build/libs/spring-music.war
-  buildpack: https://github.com/bboe-pivotal/droplet-builder
+  buildpack: https://github.com/bboe-pivotal/droplet-buildpack
   env:
     deploybuildpack: https://github.com/cloudfoundry/java-buildpack
