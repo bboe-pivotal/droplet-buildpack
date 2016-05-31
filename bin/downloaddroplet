@@ -6,7 +6,7 @@ org_manifest=$2
 
 rm -rf *
 
-cf ssh $1 -c "cat app/app.tar.gz | base64" | base64 -D > app.tar.gz
+cf ssh $1 -c "cat app/droplet.tar.gz | base64" | base64 -D > droplet.tar.gz
 cf ssh $1 -c "cat app/release.yml | base64" | base64 -D > release.yml
 
 echo Constructing manifest.yml
@@ -37,12 +37,12 @@ fi
 
 echo Constructing app folder
 mkdir app
-mv app.tar.gz app
+mv droplet.tar.gz app
 
 
 cd app
 cat ../release.yml | grep -A1000 "^  web:" > Procfile
-cat Procfile | head -1 | xargs | sed 's/.*:/& tar xzf app.tar.gz \&\& rm app.tar.gz \&\&/' > tmpprocfile
+cat Procfile | head -1 | xargs | sed 's/.*:/& tar xzf droplet.tar.gz \&\& rm drop.tar.gz \&\&/' > tmpprocfile
 cat Procfile | tail -n +2 | sed -e '/^  [a-zA-Z]*:/ { N; d; }' >> tmpprocfile
 mv tmpprocfile Procfile
 rm ../release.yml
@@ -51,7 +51,7 @@ rm ../release.yml
 echo Extract and keep .profile.d directory, if it exists
 mkdir tmp
 cd tmp
-tar xzf ../app.tar.gz
+tar xzf ../droplet.tar.gz
 mv .profile.d ..
 cd ..
 rm -rf tmp

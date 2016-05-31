@@ -26,13 +26,13 @@ cd buildpack
 echo About to compile $(basename $deploybuildpack)
 ./bin/compile $1 $2
 
-echo Make application package
-cd $1
-tar czf $cache_dir/app.tar.gz .
-mv $cache_dir/app.tar.gz .
-
 echo Capture release information
 cd $org_execution_dir
 ./buildpack/buildpack/bin/release $1 > $1/release.yml
+
+echo Make application package
+cd $1
+tar czf $cache_dir/droplet.tar.gz .
+mv $cache_dir/droplet.tar.gz .
 
 echo Droplet builder compile end
