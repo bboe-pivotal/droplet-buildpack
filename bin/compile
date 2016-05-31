@@ -10,29 +10,37 @@ cache_dir=$2
 compile_buildpack_dir=$(cd $(dirname $0); cd ..; pwd)
 org_execution_dir=`pwd`
 
-echo Droplet builder compile start
+echo Droplet buildpack compile start
 echo Build dir:                     $build_dir
 echo Cache dir:                     $cache_dir
 echo Compile buildpack dir:         $compile_buildpack_dir
 echo Original script execution dir: $org_execution_dir
 
-echo Cloning buildpack from $deploybuildpack
-mkdir buildpack
-cd buildpack
-git clone --recursive $deploybuildpack
-mv $(basename $deploybuildpack) buildpack
-cd buildpack
+if [ -f $build_dir/droplet.tar.gz ]; then
+  echo Detected droplet
+  cd $build_dir
+  tar xzf droplet.tar.gz
+  rm droplet.tar.gz
+else
+  echo No droplet detected, build droplet copy and deploy
+  echo Cloning buildpack from $deploybuildpack
+  mkdir buildpack
+  cd buildpack
+  git clone --recursive $deploybuildpack
+  mv $(basename $deploybuildpack) buildpack
+  cd buildpack
 
-echo About to compile $(basename $deploybuildpack)
-./bin/compile $1 $2
+  echo About to compile $(basename $deploybuildpack)
+  ./bin/compile $1 $2
 
-echo Capture release information
-cd $org_execution_dir
-./buildpack/buildpack/bin/release $1 > $1/release.yml
+  echo Capture release information
+  cd $org_execution_dir
+  ./buildpack/buildpack/bin/release $1 > $1/release.yml
 
-echo Make application package
-cd $1
-tar czf $cache_dir/droplet.tar.gz .
-mv $cache_dir/droplet.tar.gz .
+  echo Make application package
+  cd $1
+  tar czf $cache_dir/droplet.tar.gz .
+  mv $cache_dir/droplet.tar.gz .
+fi
 
-echo Droplet builder compile end
+echo Droplet buildpack compile complete

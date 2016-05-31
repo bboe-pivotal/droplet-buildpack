@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# bin/detect <cf-app-name> <org-manifest.yml>
+
+cf_app_name=$1
+org_manifest=$2
+
+rm -rf *
+
+cf ssh $1 -c "cat app/droplet.tar.gz | base64" | base64 -D > droplet.tar.gz
+cf ssh $1 -c "cat app/release.yml | base64" | base64 -D > release.yml
+
+echo Constructing manifest.yml
+cp $2 .
+cat manifest.yml | grep -v "    deploybuildpack:" > tmp.yml && mv tmp.yml manifest.yml
+cat manifest.yml | grep -v "  buildpack:" > tmp.yml && mv tmp.yml manifest.yml
+cat manifest.yml | grep -v "  path:" > tmp.yml && mv tmp.yml manifest.yml
+echo "  path: app" >> manifest.yml
+echo "  buildpack: binary_buildpack" >> manifest.yml
+
+
+
+echo Extracting env variable from release.yml
+cat release.yml | grep -A1000 "^config_vars:" | tail -n +2 | sed -e '/^[a-zA-Z]/q' | sed '$ d' > tmpenv.yml
+
+cat manifest.yml | sed -e '/^  env:/q' > newmanifest.yml
+cat tmpenv.yml | sed 's/^/  /' >> newmanifest.yml
+cat manifest.yml | grep -A1000 '^  env:' | tail -n +2 >> newmanifest.yml
+mv newmanifest.yml manifest.yml
+rm tmpenv.yml
+
+lines_not_matching_env=`cat manifest.yml | grep -A1 "env:" | tail -1 | grep -v "^    .*" | wc -l`
+if [ $lines_not_matching_env -eq 1  ]  
+  then  
+  echo Environment yaml section not set, remove declaration
+  cat manifest.yml | grep -v "  env:" > tmp.yml && mv tmp.yml manifest.yml
+fi
+
+echo Constructing app folder
+mkdir app
+mv droplet.tar.gz app
+
+
+cd app
+cat ../release.yml | grep -A1000 "^  web:" > Procfile
+cat Procfile | head -1 | xargs | sed 's/.*:/& tar xzf droplet.tar.gz \&\& rm droplet.tar.gz \&\&/' > tmpprocfile
+cat Procfile | tail -n +2 | sed -e '/^  [a-zA-Z]*:/ { N; d; }' >> tmpprocfile
+mv tmpprocfile Procfile
+rm ../release.yml
+
+
+echo Extract and keep .profile.d directory, if it exists
+mkdir tmp
+cd tmp
+tar xzf ../droplet.tar.gz
+mv .profile.d ..
+cd ..
+rm -rf tmp
